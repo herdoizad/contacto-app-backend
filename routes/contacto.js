@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-let contactos = []; // Simulación de base de datos en memoria
+let contactos = [
+  { id: 1, nombre: 'Administrador', correo: 'admin@iti.edu.ec', mensaje: 'Examenes Primer Parcial', fecha: new Date() },
+]; // Simulación de base de datos en memoria
 
 router.post('/', (req, res) => {
   const { nombre, correo, mensaje } = req.body;
@@ -11,15 +13,16 @@ router.post('/', (req, res) => {
   }
 
   const nuevoContacto = {
-    id: mensajes.length + 1,
+    id: contactos.length + 1,
     nombre,
     correo,
     mensaje,
     fecha: new Date()
   };
 
-  mensajes.push(nuevoContacto);
-  res.status(201).json({ ok: true, mensaje: 'Mensaje guardado correctamente' });
+  contactos.push(nuevoContacto);
+  //res.status(201).json({ ok: true, mensaje: 'Mensaje guardado correctamente' });
+  res.status(201).json(nuevoContacto);
 });
 
 router.get('/', (req, res) => {
