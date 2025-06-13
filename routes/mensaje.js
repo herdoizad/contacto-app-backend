@@ -24,4 +24,27 @@ router.post('/', (req, res) => {
   res.status(201).json(nuevo);
 });
 
+// Actualizar mensaje por ID
+router.put("/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { contenido } = req.body;
+
+  const index = mensajes.findIndex(m => m.id === id);
+  if (index === -1) return res.status(404).json({ error: "Mensaje no encontrado" });
+
+  mensajes[index].contenido = contenido;
+  res.json(mensajes[index]);
+});
+
+// Eliminar mensaje por ID
+router.delete("/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const index = mensajes.findIndex(m => m.id === id);
+  if (index === -1) return res.status(404).json({ error: "Mensaje no encontrado" });
+
+  const mensajeEliminado = mensajes.splice(index, 1);
+  res.json(mensajeEliminado[0]);
+});
+
 module.exports = router;
